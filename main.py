@@ -10,6 +10,7 @@ class GraphModel:
         self.graph = graph
         self.solucao = solucao
         self.cost = cost
+
     def fillGraph(self):
         self.graph = [[0] * self.vertices for _ in range(self.vertices)]
 
@@ -24,12 +25,23 @@ class GraphModel:
             print()
 
     def generateRandomSol(self):
+        self.fillSolucao()
         changedCount = 0;
+        random_index = 0;
         while changedCount < self.k:
-            random_index = randint(0,self.vertices-1)
-            if self.solucao[random_index]== 0:
+            availiable_indexes = [index for index, value in enumerate(self.solucao) if value == 0]
+            if(len(availiable_indexes) == 1):
+                random_index = availiable_indexes[0]
+            else:
+                random_index = availiable_indexes[randint(0,len(availiable_indexes)-1)]
+            print("A escolher " + str(random_index))
+            if self.solucao[random_index]==0:
                 self.solucao[random_index] = 1
                 changedCount+=1
+                print(self.solucao)
+                print("ChangedCount: "+str(changedCount))
+
+
 
     def getCost(self):
 
@@ -49,6 +61,7 @@ class GraphModel:
         while self.cost == -1:
             self.generateRandomSol()
             self.getCost()
+            print("iteracao")
 
 
 
@@ -57,7 +70,7 @@ class GraphModel:
 
 if __name__ == "__main__":
     model = GraphModel()
-    readFile("test.txt",model)
+    readFile("text files/test.txt",model)
     model.printGraph()
     model.fillSolucao()
     print(model.k)
