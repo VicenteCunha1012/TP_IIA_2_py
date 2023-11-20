@@ -46,7 +46,7 @@ class GraphModel:
                 if (currentCost == 0):
                     return -1
                 cost += currentCost
-        return cost / 2
+        return int(cost / 2)
 
     def createInitialSolution(self):
         self.cost = -1;
