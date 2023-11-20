@@ -58,9 +58,12 @@ class GraphModel:
 if __name__ == "__main__":
     folder = input("Introduza a pasta (vazio se estiver na mesma)\n--> ")
     file = input("Introduza o nome do ficheiro\n-->")
-    numOfRuns = int(input("Introduza o numero de iteracoes\n-->"))
+    numOfRuns = input("Introduza o numero de iteracoes\n-->")
     path = folder + "/" + file
     model = GraphModel()
+    if(path == "/" and numOfRuns == ""):
+        path = "text files/test.txt"
+        numOfRuns = 10
     readFile(path, model)
     model.printGraph()
     print(model.k)
