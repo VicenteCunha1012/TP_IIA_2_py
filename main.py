@@ -63,5 +63,5 @@ if __name__ == "__main__":
     print(model.vertices)
     print(model.arestas)
     model.createInitialSolution()
-    print(model.solucao)
-    print(model.cost)
+    print("Initial Solution:", model.solucao)
+    print("Inital Cost:", model.cost)
