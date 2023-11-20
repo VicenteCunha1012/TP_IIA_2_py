@@ -2,7 +2,7 @@ from utils import *
 from algo import *
 
 from random import randint
-
+import time
 
 class GraphModel:
     def __init__(self, k=0, vertices=0, arestas=0, graph=[], solucao=[], cost=0):
@@ -56,6 +56,7 @@ class GraphModel:
 
 
 if __name__ == "__main__":
+
     folder = input("Introduza a pasta (vazio se estiver na mesma)\n--> ")
     file = input("Introduza o nome do ficheiro\n-->")
     numOfRuns = input("Introduza o numero de iteracoes\n-->")
@@ -64,6 +65,7 @@ if __name__ == "__main__":
     if(path == "/" and numOfRuns == ""):
         path = "text files/test.txt"
         numOfRuns = 10
+    start = time.time()
     readFile(path, model)
     model.printGraph()
     print(model.k)
@@ -72,3 +74,6 @@ if __name__ == "__main__":
     model.createInitialSolution()
     print("Initial Solution:", model.solucao)
     print("Inital Cost:", model.cost)
+    end = time.time()
+    elapsed_time_str = "{:.5f}".format(end-start)
+    print("Elapsed time: "+ elapsed_time_str+ "seconds.")
