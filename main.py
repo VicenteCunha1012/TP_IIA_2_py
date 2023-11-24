@@ -4,6 +4,9 @@ from algo import *
 from random import randint
 import time
 import tkinter as tk
+from tkinter import ttk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
 
 
 def submit():
@@ -11,15 +14,43 @@ def submit():
     iterations = iterations_entry.get()
 
     # You can add your logic or processing here
-    iterations_label.config(text="Numero de Iteracoes: " + iterations)
-    filename_label.config(text="Nome do Ficheiro: " + filename)
+    iterations_label.config(text="Introduziste: " + iterations)
+    filename_label.config(text="Introduziste: " + filename)
     print(f"File Name: {filename}")
     print(f"Number of Iterations: {iterations}")
+
+
+def plot_graph():
+    # Sample data for the plot
+    x_data = [1, 2, 3, 4, 5]
+    y_data = [2, 4, 6, 8, 10]
+
+    # Create a figure and axis
+    fig, ax = plt.subplots()
+
+    # Plot the data
+    ax.plot(x_data, y_data, label='Sample Plot')
+
+    # Set labels and title
+    ax.set_xlabel('X-axis')
+    ax.set_ylabel('Y-axis')
+    ax.set_title('Sample Plot')
+
+    # Display legend
+    ax.legend()
+
+    # Embed the plot in the Tkinter window
+    canvas = FigureCanvasTkAgg(fig, master=window)
+    canvas_widget = canvas.get_tk_widget()
+    canvas_widget.pack()
 
 
 # Create the main window
 window = tk.Tk()
 window.title("Tkinter Example")
+
+# Set the initial size of the window
+window.geometry("600x400")  # Width x Height
 
 # Create and place labels and entry widgets
 filename_label = tk.Label(window, text="Nome do Ficheiro:")
@@ -36,6 +67,10 @@ iterations_entry.pack(pady=10)
 
 submit_button = tk.Button(window, text="Submit", command=submit)
 submit_button.pack()
+
+# Button to plot the graph
+plot_button = tk.Button(window, text="Plot Graph", command=plot_graph)
+plot_button.pack()
 
 # Start the main loop
 window.mainloop()
