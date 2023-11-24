@@ -3,7 +3,44 @@ from algo import *
 
 from random import randint
 import time
+import tkinter as tk
 
+
+def submit():
+    filename = filename_entry.get()
+    iterations = iterations_entry.get()
+
+    # You can add your logic or processing here
+    iterations_label.config(text="Numero de Iteracoes: " + iterations)
+    filename_label.config(text="Nome do Ficheiro: " + filename)
+    print(f"File Name: {filename}")
+    print(f"Number of Iterations: {iterations}")
+
+
+# Create the main window
+window = tk.Tk()
+window.title("Tkinter Example")
+
+# Create and place labels and entry widgets
+filename_label = tk.Label(window, text="Nome do Ficheiro:")
+filename_label.pack(pady=5)
+
+filename_entry = tk.Entry(window, width=30)
+filename_entry.pack(pady=5)
+
+iterations_label = tk.Label(window, text="Numero de Iteracoes:")
+iterations_label.pack(pady=5)
+
+iterations_entry = tk.Entry(window, width=30)
+iterations_entry.pack(pady=10)
+
+submit_button = tk.Button(window, text="Submit", command=submit)
+submit_button.pack()
+
+# Start the main loop
+window.mainloop()
+
+'''
 class GraphModel:
     def __init__(self):
         self.k = self.vertices = self.arestas = self.cost = self.bestCost =self.numOfRuns= 0
@@ -143,3 +180,4 @@ if __name__ == "__main__":
 
 
 
+'''
