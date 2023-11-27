@@ -3,6 +3,17 @@ from algo import *
 
 from random import randint
 import time
+import matplotlitb as plt
+import networkx as nx
+
+def show_graph_with_labels(adjacency_matrix, mylabels):
+    rows, cols = np.where(ajdacency_matrix == 1)
+    edges = zip(rows.tolist(), cols.tolist())
+    gr = nx.Graph()
+    gr.add_edges_from(edges)
+    nx.draw(gr, node_size=500, labels=mylabels, with_labels=True)
+    plt.show()
+
 
 class GraphModel:
     def __init__(self):
@@ -114,6 +125,7 @@ class GraphModel:
 
 
 
+
 if __name__ == "__main__":
     bestEver = 0
     bestSolution = []
@@ -135,6 +147,7 @@ if __name__ == "__main__":
     print(f"Initial Solution: {str(model.solucao):>33}")
     model.create_admissible_neighbour()
     print("Solucao admissivel" + str(model.solucao))
+
     nruns = 30
 
     for i in range(nruns):
@@ -147,6 +160,8 @@ if __name__ == "__main__":
             bestEver = model.bestCost
             bestSolution = model.bestSolution
         nbf += model.bestCost
+        print("Iteracao " + str(i))
+
 
     print("Best cost" + str(model.bestCost))
     print("Best solution" + str(model.bestSolution))
