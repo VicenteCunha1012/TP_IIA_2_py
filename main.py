@@ -115,6 +115,10 @@ class GraphModel:
 
 
 if __name__ == "__main__":
+    bestEver = 0
+    bestSolution = []
+    nbf = 0.0
+
     model = GraphModel()
     timeInit = model.initModel()
     model.printGraph()
@@ -131,10 +135,18 @@ if __name__ == "__main__":
     print(f"Initial Solution: {str(model.solucao):>33}")
     model.create_admissible_neighbour()
     print("Solucao admissivel" + str(model.solucao))
+    nruns = 30
 
+    for i in range(nruns):
 
-
-    model.hill_climbing()
+        model.hill_climbing()
+        if i==0:
+            bestEver = model.bestCost
+            bestSolution = model.bestSolution
+        elif model.bestCost < bestEver:
+            bestEver = model.bestCost
+            bestSolution = model.bestSolution
+        nbf += model.bestCost
 
     print("Best cost" + str(model.bestCost))
     print("Best solution" + str(model.bestSolution))
