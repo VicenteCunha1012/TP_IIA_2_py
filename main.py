@@ -3,16 +3,10 @@ from algo import *
 
 from random import randint
 import time
-import matplotlitb as plt
+import matplotlib as plt
 import networkx as nx
+import numpy as np
 
-def show_graph_with_labels(adjacency_matrix, mylabels):
-    rows, cols = np.where(ajdacency_matrix == 1)
-    edges = zip(rows.tolist(), cols.tolist())
-    gr = nx.Graph()
-    gr.add_edges_from(edges)
-    nx.draw(gr, node_size=500, labels=mylabels, with_labels=True)
-    plt.show()
 
 
 class GraphModel:
@@ -122,6 +116,15 @@ class GraphModel:
 
                 print("best cost "+ str(self.bestCost))
 
+    def show_Matrix(self):
+        numpyARRAY = np.array(self.graph)
+        G = nx.from_numpy_array(numpyARRAY)
+
+        pos = nx.spring_layout(G)
+
+        nx.draw(G, pos, with_labels=True, node_color="skyblue", node_size=self.vertices, font_weight="bold", font_size=10)
+        plt.title("Nigga")
+        plt.show()
 
 
 
@@ -148,6 +151,10 @@ if __name__ == "__main__":
     model.create_admissible_neighbour()
     print("Solucao admissivel" + str(model.solucao))
 
+    model.show_Matrix()
+    '''
+    
+
     nruns = 30
 
     for i in range(nruns):
@@ -164,7 +171,7 @@ if __name__ == "__main__":
 
 
     print("Best cost" + str(model.bestCost))
-    print("Best solution" + str(model.bestSolution))
+    print("Best solution" + str(model.bestSolution))'''
 
 
 
