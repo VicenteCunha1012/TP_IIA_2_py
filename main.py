@@ -3,6 +3,14 @@ from algo import *
 
 from random import randint
 import time
+import matplotlib.pyplot as plt
+import networkx as nx
+#matplotlib.use('TkAgg')  # Use 'TkAgg' or another backend that works on your system
+
+
+
+
+
 
 class GraphModel:
     def __init__(self):
@@ -111,6 +119,49 @@ class GraphModel:
 
                 print("best cost "+ str(self.bestCost))
 
+    def read_graph_from_file(self, file_path):
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            self.k = int(lines[0].split()[1])
+            num_vertices, num_edges = map(int, lines[1].split()[2:])
+
+            # Initialize the graph with empty adjacency lists
+            self.graph = [[] for _ in range(num_vertices + 1)]
+
+            # Read edge information and add edges to the graph
+            for line in lines[2:]:
+                if line.startswith('e'):
+                    _, u, v, weight = line.split()
+                    u, v, weight = map(int, [u, v, weight])
+                    self.graph[u].append((v, weight))
+                    self.graph[v].append((u, weight))  # Assuming an undirected graph
+
+    '''def visualize_graph(self):
+        G = nx.Graph()
+        for u in range(1, len(self.graph)):
+            for v, weight in self.graph[u]:
+                G.add_edge(u, v, weight=weight)
+
+        pos = nx.spring_layout(G)  # You can use other layout algorithms
+        labels = {(u, v): d['weight'] for u, v, d in G.edges(data=True)}
+        nx.draw(G, pos, with_labels=True, labels=labels, font_weight='bold', node_size=700, node_color='skyblue',
+                font_color='black', font_size=8)
+        plt.show()'''
+
+    def visualize_graph(self):
+        G = nx.Graph()
+        for u in range(1, len(self.graph)):
+            for v, weight in self.graph[u]:
+                G.add_edge(u, v, weight=weight)
+
+        pos = nx.spring_layout(G)
+
+        labels = {node: f"{node}\n" for node in G.nodes}  # Change this line
+
+        nx.draw(G, pos, with_labels=True, labels=labels, font_weight='bold', node_size=700, node_color='skyblue',
+                font_color='black', font_size=8)
+        plt.pause(0.001)  # Use plt.pause to display the plot
+        plt.show()
 
 
 
@@ -122,6 +173,10 @@ if __name__ == "__main__":
     model = GraphModel()
     timeInit = model.initModel()
     model.printGraph()
+    graph_model = GraphModel()
+    graph_model.read_graph_from_file('text files/test.txt')
+    graph_model.visualize_graph()
+    '''
     print(f"Path: {model.path:>45}")
     print(f"K: {model.k:>48}")
     print(f"Vertex Number: {model.vertices:>36}")
@@ -153,5 +208,5 @@ if __name__ == "__main__":
 
 
 
-
+'''
 
