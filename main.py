@@ -108,7 +108,7 @@ class GraphModel:
 
 
 if __name__ == "__main__":
-    print("Testes")
+    print("Testes aqui")
     nRuns = 30
     bestEver = 0
     bestSol = []
