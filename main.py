@@ -4,9 +4,10 @@ from algo import *
 from random import randint
 import time
 
+
 class GraphModel:
     def __init__(self):
-        self.k = self.vertices = self.arestas = self.cost = self.bestCost =self.numOfRuns= 0
+        self.k = self.vertices = self.arestas = self.cost = self.bestCost = self.numOfRuns = 0
         self.graph = [[]]
         self.solucao = []
         self.path = ""
@@ -49,7 +50,7 @@ class GraphModel:
     def createInitialSolution(self):
 
         start = time.time()
-        self.cost = -1;
+        self.cost = -1
         while self.cost == -1:
             self.generateRandomSol()
             self.cost = self.getCost()
@@ -60,15 +61,10 @@ class GraphModel:
         return "{:.5f}".format(end - start)
 
     def initModel(self):
-        folder = input("Introduza a pasta (vazio se estiver na mesma)\n--> ")
+
         file = input("Introduza o nome do ficheiro\n-->")
-        self.numOfRuns = input("Introduza o numero de iteracoes\n-->")
-        self.path = folder + "/" + file
-        if (self.path == "/" and self.numOfRuns == ""):
-            self.path = "text files/test.txt"
-            self.numOfRuns = 10
-        else:
-            self.numOfRuns = int(self.numOfRuns)
+        self.numOfRuns = int(input("Introduza o numero de iteracoes\n-->"))
+        self.path = "text files/" + file
         start = time.time()
         readFile(self.path, self)
         end = time.time()
@@ -76,27 +72,30 @@ class GraphModel:
 
     def create_neighbour(self):
 
-
-
-        tempValue = -1 #para entrar no loop
+        tempValue = -1  # para entrar no loop
         index1 = index2 = 0
-        while(tempValue!=0):
+        while (tempValue != 0):
             index1 = randint(0, self.vertices - 1)
             tempValue = self.solucao[index1]
 
-
         tempValue = 0
-        while(tempValue!=1):
-            index2 = randint(0,self.vertices-1)
+        while (tempValue != 1):
+            index2 = randint(0, self.vertices - 1)
             tempValue = self.solucao[index2]
 
         self.solucao[index1] = 1
         self.solucao[index2] = 0
 
+    def create_neighbour2(self):
+        self.create_neighbour()
+        tempSol = list(self.solucao)
+        while tempSol == self.solucao:
+            self.create_neighbour()
+
     def create_admissible_neighbour(self):
         tempCost = -1
-        while(tempCost==-1):
-            self.create_neighbour()
+        while tempCost == -1:
+            self.create_neighbour2()
             tempCost = self.getCost()
 
     def hill_climbing(self):
@@ -106,15 +105,13 @@ class GraphModel:
             if self.cost <= self.bestCost:
                 self.bestSolution = list(self.solucao)
                 self.bestCost = self.cost
-            if(i%1==0):
-                print("Iteracao " + str(i))
-
-                print("best cost "+ str(self.bestCost))
-
-
 
 
 if __name__ == "__main__":
+    nRuns = 30
+    bestEver = 0
+    bestSol = []
+    mbf = 0.0
     model = GraphModel()
     timeInit = model.initModel()
     model.printGraph()
@@ -132,14 +129,20 @@ if __name__ == "__main__":
     model.create_admissible_neighbour()
     print("Solucao admissivel" + str(model.solucao))
 
+    for i in range(nRuns):
+        print("Run " + str(i) + ": ", end="")
+        model.hill_climbing()
+        if i == 0:
+            bestEver = model.bestCost
+            bestSol = list(model.bestSolution)
+        elif model.bestCost < bestEver:
+            bestEver = model.bestCost
+            bestSol = (model.bestSolution)
+        mbf += model.bestCost
+        print(model.bestSolution)
+        print("Best Cost: " + str(model.bestCost))
 
-
-    model.hill_climbing()
-
-    print("Best cost" + str(model.bestCost))
-    print("Best solution" + str(model.bestSolution))
-
-
-
-
-
+    mbf /= nRuns
+    print("MBF: " + str(mbf))
+    print("Best Ever: " + str(bestEver))
+    print("Best solution: " + str(bestSol))
