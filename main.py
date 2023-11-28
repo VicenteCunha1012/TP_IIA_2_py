@@ -146,3 +146,4 @@ if __name__ == "__main__":
     print("MBF: " + str(mbf))
     print("Best Ever: " + str(bestEver))
     print("Best solution: " + str(bestSol))
+    print("xau")
