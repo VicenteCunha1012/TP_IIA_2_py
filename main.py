@@ -107,6 +107,27 @@ class GraphModel:
                 self.bestCost = self.cost
 
 
+
+class Individuo:
+    def __init__(self, popSize, numGenes):
+        self.solucoes = [[0 for _ in range(popSize)] for _ in range(numGenes)] #falta preencher ja c o tamanho  # vai ter MAX_OBJ elementos
+        #matrix = [[0 for _ in range(y)] for _ in range(x)]
+        self.fitness = 0.0
+        valido = 0
+        self.popSize = popSize
+        self.numGenes = numGenes
+
+
+    def init_pop(self):
+        for i in range(self.popSize):
+            for j in range(self.numGenes):
+                self.solucoes[i][j] = randint(0, 1)
+
+
+
+
+
+
 if __name__ == "__main__":
     nRuns = 30
     bestEver = 0
