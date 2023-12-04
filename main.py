@@ -110,10 +110,9 @@ class GraphModel:
 
 class Individuo:
     def __init__(self, popSize, numGenes):
-        self.solucoes = [[0 for _ in range(popSize)] for _ in range(numGenes)] #falta preencher ja c o tamanho  # vai ter MAX_OBJ elementos
-        #matrix = [[0 for _ in range(y)] for _ in range(x)]
+        self.solucoes = [[0 for _ in range(popSize)] for _ in range(numGenes)]
         self.fitness = 0.0
-        valido = 0
+        self.valido = 0
         self.popSize = popSize
         self.numGenes = numGenes
 
@@ -122,6 +121,38 @@ class Individuo:
         for i in range(self.popSize):
             for j in range(self.numGenes):
                 self.solucoes[i][j] = randint(0, 1)
+
+
+class Metodos:
+
+    def __init(self):
+        print()
+
+    def crossover(self ,parent1, parent2):
+        crossover_index = randint(0, len(parent1)-1)
+        child = parent1[:crossover_index] + parent2[crossover_index:]
+
+        return child
+
+    def mutate(self, Individuo, mutation_rate):
+        mutated = list(Individuo.solucoes)
+        for i in range(len(mutated)):
+            if random()< mutation_rate:
+                mutated[i] = 1 if mutated[i] == 0 else 0 #flippar o gene
+
+        return mutated
+
+    def tournament(selfpopulation, tournament_size):
+        selected_parents = []
+        for _ in range(len(population)):
+            tournament = sample(population, tournament_size)
+            winner = max(tournament, key=lambda ind: ind.fitness)
+            selected_parents.append(winner)
+
+        return selected_parents
+
+
+
 
 
 
